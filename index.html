@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+    <title>FRONTEND CHALLENGE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f0f7f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2c9c91;
+            box-shadow: 0 0 0 3px rgba(44, 156, 145, 0.1);
+        }
+
+        .error {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            position: absolute;
+            bottom: -20px;
+        }
+
+        input.error-field,
+        textarea.error-field {
+            border-color: #e53e3e;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 1.125rem;
+            height: 1.125rem;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #2c9c91;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #238b82;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 156, 145, 0.3);
+        }
+
+        .success-message {
+            background-color: #48bb78;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <div id="successMessage" class="success-message" role="alert" aria-live="polite">
+            Form submitted successfully!
+        </div>
+        <form id="contactForm" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        name="firstName" 
+                        required 
+                        aria-required="true"
+                        aria-describedby="firstNameError"
+                    >
+                    <div id="firstNameError" class="error" role="alert"></div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        name="lastName" 
+                        required 
+                        aria-required="true"
+                        aria-describedby="lastNameError"
+                    >
+                    <div id="lastNameError" class="error" role="alert"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    aria-required="true"
+                    aria-describedby="emailError"
+                >
+                <div id="emailError" class="error" role="alert"></div>
+            </div>
+            <div class="form-group">
+                <label id="queryTypeLabel">Query Type *</label>
+                <div class="radio-group" role="radiogroup" aria-labelledby="queryTypeLabel">
+                    <div class="radio-option">
+                        <input 
+                            type="radio" 
+                            id="generalEnquiry" 
+                            name="queryType" 
+                            value="general"
+                            required
+                            aria-required="true"
+                        >
+                        <label for="generalEnquiry">General Enquiry</label>
+                    </div>
+                    <div class="radio-option">
+                        <input 
+                            type="radio" 
+                            id="supportRequest" 
+                            name="queryType" 
+                            value="support"
+                            required
+                            aria-required="true"
+                        >
+                        <label for="supportRequest">Support Request</label>
+                    </div>
+                </div>
+                <div id="queryTypeError" class="error" role="alert"></div>
+            </div>
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    rows="5" 
+                    required 
+                    aria-required="true"
+                    aria-describedby="messageError"
+                ></textarea>
+                <div id="messageError" class="error" role="alert"></div>
+            </div>
+            <div class="checkbox-group">
+                <input 
+                    type="checkbox" 
+                    id="consent" 
+                    name="consent" 
+                    required 
+                    aria-required="true"
+                    aria-describedby="consentError"
+                >
+                <label for="consent">I consent to being contacted by the team *</label>
+                <div id="consentError" class="error" role="alert"></div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+
+            // Validation patterns
+            const patterns = {
+                email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+            };
+
+            // Show error message
+            function showError(field, message) {
+                const errorDiv = document.getElementById(`${field.id}Error`) || 
+                               document.getElementById('queryTypeError'); // for radio buttons
+                errorDiv.textContent = message;
+                if (field.type !== 'radio') {
+                    field.classList.add('error-field');
+                }
+                field.setAttribute('aria-invalid', 'true');
+            }
+
+            // Clear error message
+            function clearError(field) {
+                const errorDiv = document.getElementById(`${field.id}Error`) || 
+                               document.getElementById('queryTypeError'); // for radio buttons
+                errorDiv.textContent = '';
+                if (field.type !== 'radio') {
+                    field.classList.remove('error-field');
+                }
+                field.setAttribute('aria-invalid', 'false');
+            }
+
+            // Validate form
+            function validateForm(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Clear all previous errors
+                document.querySelectorAll('.error').forEach(error => error.textContent = '');
+                document.querySelectorAll('.error-field').forEach(field => field.classList.remove('error-field'));
+
+                // First Name validation
+                const firstName = document.getElementById('firstName');
+                if (!firstName.value.trim()) {
+                    showError(firstName, 'First name is required');
+                    isValid = false;
+                } else {
+                    clearError(firstName);
+                }
+
+                // Last Name validation
+                const lastName = document.getElementById('lastName');
+                if (!lastName.value.trim()) {
+                    showError(lastName, 'Last name is required');
+                    isValid = false;
+                } else {
+                    clearError(lastName);
+                }
+
+                // Email validation
+                const email = document.getElementById('email');
+                if (!email.value.trim()) {
+                    showError(email, 'Email is required');
+                    isValid = false;
+                } else if (!patterns.email.test(email.value.trim())) {
+                    showError(email, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    clearError(email);
+                }
+
+                // Query Type validation
+                const queryType = form.querySelector('input[name="queryType"]:checked');
+                if (!queryType) {
+                    showError(form.querySelector('input[name="queryType"]'), 'Please select a query type');
+                    isValid = false;
+                } else {
+                    clearError(queryType);
+                }
+
+                // Message validation
+                const message = document.getElementById('message');
+                if (!message.value.trim()) {
+                    showError(message, 'Message is required');
+                    isValid = false;
+                } else {
+                    clearError(message);
+                }
+
+                // Consent validation
+                const consent = document.getElementById('consent');
+                if (!consent.checked) {
+                    showError(consent, 'Please provide your consent');
+                    isValid = false;
+                } else {
+                    clearError(consent);
+                }
+
+                if (isValid) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    successMessage.focus();
+                    // Reset form
+                    form.reset();
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+
+            // Add form submit event listener
+            form.addEventListener('submit', validateForm);
+
+            // Add keyboard navigation support
+            form.querySelectorAll('input, textarea, button').forEach(element => {
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'submit') {
+                        e.preventDefault();
+                        const inputs = [...form.querySelectorAll('input, textarea, button')];
+                        const index = inputs.indexOf(e.target);
+                        inputs[index + 1].focus();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
